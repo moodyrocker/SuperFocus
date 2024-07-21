@@ -12,6 +12,7 @@ let focusTimeSlider = document.getElementById('focusTimeSlider');
 function loadButtonStates() {
   // Load the saved states from chrome.storage when the popup is opened
     chrome.storage.sync.get(['startButton', 'pauseButton', 'resumeButton', 'resetButton', 'restartButton', 'focusTimeSlider'], function(result) {
+      console.log('Loaded button states:', result); // Debugging line
       startButton.style.display = result.startButton || 'block';
       pauseButton.style.display = result.pauseButton || 'none';
       resumeButton.style.display = result.resumeButton || 'none';
@@ -29,6 +30,7 @@ let today = new Date().getDay();
 // Load the saved day from chrome.storage
 chrome.storage.sync.get(['savedDay'], function(result) {
   // If the saved day is not today, reset the counters
+  console.log('Loaded saved day:', result); // Debugging line
   if (result.savedDay !== today) {
     // Reset the counters
     focusTime.value = 30;
@@ -45,6 +47,7 @@ let focusTime = document.getElementById('focusTime');
 let focusTimeValue = document.getElementById('focusTimeValue');
 
 focusTime.oninput = function() {
+  console.log('Focus time input changed:', this.value); // Debugging line
   focusTimeValue.textContent = this.value;
 }
 
@@ -157,6 +160,9 @@ document.getElementById('startButton').addEventListener('click', function() {
     // Sort the days
     let sortedDays = Object.keys(sessionsByDay).sort();
 
+
+
+    
     // Display the sessions
     for (let i = 0; i < sortedDays.length; i++) {
         let day = sortedDays[i];
@@ -165,12 +171,16 @@ document.getElementById('startButton').addEventListener('click', function() {
             let session = daySessions[j];
             let listItem = document.createElement('div');
             let startTime = new Date(session.start).toLocaleTimeString();
-            let endTime = session.end ? new Date(session.end).toLocaleTimeString() : 'In progress';
+            let endTime = session.end ? new Date(session.end).toLocaleTimeString() : 'incomplete';
             let duration = session.duration / 1000 / 60; // Convert duration from ms to minutes
+            duration = duration.toFixed(2); // "123.46"
           //  listItem.textContent = `Day: ${day}, Session ${j + 1}: Start time: ${startTime}, End time: ${endTime}, Duration: ${duration} minutes`;
           
-            listItem.textContent = `Day: ${day}, Session ${j + 1}: Start time: ${startTime}, End time: ${endTime}, Duration: ${duration} minutes`;
-            sessionList.appendChild(listItem);
+          //  listItem.textContent = `Day: ${day}, Session ${j + 1}: Start time: ${startTime}, End time: ${endTime}, Duration: ${duration} minutes`;
+
+listItem.innerHTML = `<li>
+<div><b>SESSION ${j + 1} :</b> STARTED ${startTime} - ${endTime}, [ Duration ${duration} minutes]</div></li>`;
+sessionList.appendChild(listItem);
         }
     }
 });

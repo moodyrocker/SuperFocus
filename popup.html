@@ -1,125 +1,155 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <title>SuperFocus 1.9</title>
-<!-- UIkit CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.19.2/dist/css/uikit.min.css" />
-<style>
-    .s9-padding {padding: 5px;}
-    .s9-button {background-color: #e43c12; color: #ede9e1; font-size: medium; border-radius: 4px;}
+
+<head>
+  <title>SuperFocus 2.0</title>
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.19.2/dist/css/uikit.min.css" />
+
+  <style>
+    .s9-padding {
+      padding: 5px;
+    }
+
+    .s9-button {
+      background-color: #e43c12;
+      color: #ede9e1;
+      font-size: medium;
+      border-radius: 4px;
+    }
 
 
-input[type="range"] {
-  /* removing default appearance */
-  -webkit-appearance: none;
-  appearance: none; 
-  /* creating a custom design */
-  width: 100%;
-  cursor: pointer;
-  outline: none;
-  /*  slider progress trick  */
-  overflow: hidden;
-  border-radius: 16px;
-}
+    input[type="range"] {
+      /* removing default appearance */
+      -webkit-appearance: none;
+      appearance: none;
+      /* creating a custom design */
+      width: 100%;
+      cursor: pointer;
+      outline: none;
+      /*  slider progress trick  */
+      overflow: hidden;
+      border-radius: 16px;
+    }
 
-/* Track: webkit browsers */
-input[type="range"]::-webkit-slider-runnable-track {
-  height: 15px;
-  background: #ddd;
-  border-radius: 16px;
-}
+    /* Track: webkit browsers */
+    input[type="range"]::-webkit-slider-runnable-track {
+      height: 15px;
+      background: #ddd;
+      border-radius: 16px;
+    }
 
-/* Track: Mozilla Firefox */
-input[type="range"]::-moz-range-track {
-  height: 15px;
-  background: #ccc;
-  border-radius: 16px;
-}
+    /* Track: Mozilla Firefox */
+    input[type="range"]::-moz-range-track {
+      height: 15px;
+      background: #ccc;
+      border-radius: 16px;
+    }
 
-/* Thumb: webkit */
-input[type="range"]::-webkit-slider-thumb {
-  /* removing default appearance */
-  -webkit-appearance: none;
-  appearance: none; 
-  /* creating a custom design */
-  height: 15px;
-  width: 15px;
-  background-color: #fff;
-  border-radius: 50%;
-  border: 2px solid #e43c12;
-  /*  slider progress trick  */
-  box-shadow: -407px 0 0 400px #e43c12;
-}
+    /* Thumb: webkit */
+    input[type="range"]::-webkit-slider-thumb {
+      /* removing default appearance */
+      -webkit-appearance: none;
+      appearance: none;
+      /* creating a custom design */
+      height: 15px;
+      width: 15px;
+      background-color: #fff;
+      border-radius: 50%;
+      border: 2px solid #e43c12;
+      /*  slider progress trick  */
+      box-shadow: -407px 0 0 400px #e43c12;
+    }
 
 
-/* Thumb: Firefox */
-input[type="range"]::-moz-range-thumb {
-  height: 15px;
-  width: 15px;
-  background-color: #fff;
-  border-radius: 50%;
-  border: 1px solid #f50;
-  /*  slider progress trick  */
-  box-shadow:  0 0 400px #f50;
-}
+    /* Thumb: Firefox */
+    input[type="range"]::-moz-range-thumb {
+      height: 15px;
+      width: 15px;
+      background-color: #fff;
+      border-radius: 50%;
+      border: 1px solid #f50;
+      /*  slider progress trick  */
+      box-shadow: 0 0 400px #f50;
+    }
 
-/*=============
+    /*=============
 Aesthetics 
 =========================*/
 
-.range {
-  display: flex;
-  align-items: center;
-  height: 4rem;
-  width: 50%;
-  background: #fff;
-  padding: 0px 10px;
-}
-
-</style>
-
-
-    </head>
-    <body>
-        <div style="background-color: #e43c12" class="uk-padding"> <img src="https://supernines.com/sf/images/ogo_ye1.png">
-        </div> 
-        
-    <div class="uk-container uk-padding-small " style="width: 340px; background-color: #ede9e1;">
-        <div class="uk-margin">
-
-        <div  style="color: #e43c12;">FOCUS TIME REMAINING... </div>
-            <div class="" id="countdown"  style=" padding: 13px 0; font-size: 10em;  display: flex; align-items: center; justify-content: center; height: 130px; color: #e43c12;"> --:-- </div>   
-             <!-- <div id="count"></div> --->
-
-                    <div id="sessionList1"></div>
-   
-        </div>
-
-        <!--- sider -->
-            <div id="focusTimeSlider" style="padding: 10px 0 30px 0;">
-            <div style="color: #e43c12; padding: 10px 0;" for="focusTime">FOCUS TIME  SET TO  <span id="focusTimeValue" style=" font-weight: bold; font-size: 18px; background: #e43c12; padding: 5px 10px; color: #ede9e1;">30</span> MINUTES </div>
-            <div class="slidecontainer"><input class="slider" type="range" id="focusTime" name="focusTime" min="20" max="45" step="5" value="30" ></div>
-            </div>
-        <!--- sider -->
+    .range {
+      display: flex;
+      align-items: center;
+      height: 4rem;
+      width: 50%;
+      background: #fff;
+      padding: 0px 10px;
+    }
+  </style>
 
 
-        <!--- buttons -->
-        <div class="s9-padd">
-            <button id="startButton" class="uk-button uk-button-default uk-button-large uk-width-1-1 s9-button">START</button>
-            <button id="pauseButton" class="uk-button uk-button-default uk-button-large uk-width-1-1 s9-button">PAUSE</button>
-            <button id="restartButton" class="uk-button uk-button-default uk-button-large uk-width-1-1 s9-button" style="display: none;">RESTART</button>  
-        </div>
-        <div class="s9-padd" style=" display: flex; justify-content: space-between;">
-            <button id="resumeButton" class="uk-button uk-button-default uk-button-large uk-width-1-2 s9-button" style="display: none;">RESUME</button>   
-            <button id="resetButton" class="uk-button uk-button-default uk-button-large uk-width-1-2 s9-button" style="display: none;" >RESET</button> 
-        </div>     
-      
-        <!--- buttons -->
+</head>
+
+<body>
+  <div style="background-color: #e43c12" class="uk-padding"> <img src="https://supernines.com/sf/images/ogo_ye1.png">
+  </div>
+
+  <div class="uk-container uk-padding-small " style="width: 340px; background-color: #ede9e1;">
+    <div class="uk-margin">
+
+      <div style="color: #e43c12;">FOCUS TIME REMAINING... 2.0</div>
+      <div class="" id="countdown"
+        style=" padding: 13px 0; font-size: 10em;  display: flex; align-items: center; justify-content: center; height: 130px; color: #e43c12;">
+        --:-- </div>
+      <!-- <div id="count"></div> --->
 
 
-        </div>    <!--- margin -->
-    </div>    <!--- container -->
-    </body>
-    <script src="popup.js"></script>
+
+      <div> 
+        <ul class="uk-list uk-list-divider" id="sessionList9999">
+
+        </ul>
+      </div>
+
+    </div>
     
+    <!--- sider -->
+    <div id="focusTimeSlider" style="padding: 10px 0 30px 0;">
+      <div style="color: #e43c12; padding: 10px 0;" for="focusTime">FOCUS TIME SET TO <span id="focusTimeValue"
+          style=" font-weight: bold; font-size: 18px; background: #e43c12; padding: 5px 10px; color: #ede9e1;">30</span>
+        MINUTES </div>
+      <div class="slidecontainer"><input class="slider" type="range" id="focusTime" name="focusTime" min="20" max="45"
+          step="5" value="30"></div>
+    </div>
+    <!--- sider -->
+
+    <!--- buttons -->
+    <div class="s9-padd">
+      <button id="startButton" class="uk-button uk-button-default uk-button-large uk-width-1-1 s9-button">START</button>
+      <button id="pauseButton" class="uk-button uk-button-default uk-button-large uk-width-1-1 s9-button">PAUSE</button>
+      <button id="restartButton" class="uk-button uk-button-default uk-button-large uk-width-1-1 s9-button"
+        style="display: none;">RESTART</button>
+    </div>
+    <div class="s9-padd" style=" display: flex; justify-content: space-between;">
+      <button id="resumeButton" class="uk-button uk-button-default uk-button-large uk-width-1-2 s9-button"
+        style="display: none;">RESUME</button>
+      <button id="resetButton" class="uk-button uk-button-default uk-button-large uk-width-1-2 s9-button"
+        style="display: none;">RESET</button>
+    </div>
+
+    <!--- buttons -->
+    <br>
+
+    <div> 
+      <div style="color: #e43c12;">SESSIONS COMPLETED TODAY</div>
+      <ul class="uk-list uk-list-collapse uk-list-divider" id="sessionList">
+
+      </ul>
+    </div>
+
+  </div> <!--- margin -->
+  </div> <!--- container -->
+</body>
+<script src="popup.js"></script>
+
 </html>

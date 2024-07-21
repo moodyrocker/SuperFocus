@@ -18,20 +18,24 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         chrome.action.setBadgeBackgroundColor({color: '#4688F1'});
         chrome.action.setBadgeTextColor({color: '#FFFFFF'});
         remainingTime = message.minutes * 60;
+        console.log('Starting countdown with minutes:', message.minutes); // Debugging line
         startCountdown(message.minutes); // Pass the minutes parameter
         focusTimes.push(message.minutes); // Add the focus time to the array
         chrome.storage.local.set({focusTimes: focusTimes}); // Save the focus times array to storage
     } else if (message.pause) {
         if (remainingTime > 0) {
+            console.log('Pausing countdown'); // Debugging line
             clearInterval(countdown);
         } 
        // clearInterval(countdown);
     } else if (message.resume) {
         if (remainingTime > 0) {
+            console.log('Resuming countdown with remaining time:', remainingTime / 60); // Debugging line
             startCountdown(remainingTime / 60); // Pass the remaining time in minutes
         } 
      // startCountdown(message.minutes); // Pass the minutes parameter
     } else if (message.reset) {
+        console.log('Resetting countdown'); // Debugging line
         clearInterval(countdown);
         chrome.action.setBadgeText({text: ''});
         remainingTime = 0;
@@ -56,7 +60,9 @@ function startCountdown(minutes) {
     chrome.storage.local.set({sessions: sessions});
     countdown = setInterval(function() {
         remainingTime = Math.round((endTime - Date.now()) / 1000);
+        console.log('Remaining time:', remainingTime); // Debugging line
         if (remainingTime <= 0) {
+            console.log('Countdown finished'); // Debugging line
             clearInterval(countdown);
       
             chrome.action.setBadgeText({text: '0:00'});
